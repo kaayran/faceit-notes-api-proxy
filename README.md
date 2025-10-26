@@ -183,13 +183,24 @@ faceit-notes-api-proxy/
 
 ## Roadmap
 
-We're actively working on expanding the FACEIT API proxy functionality. Planned features:
-
+### API Features
 - [ ] Detailed player statistics and performance metrics
 - [ ] Extended match data (rounds, kills, deaths, assists)
 - [ ] Player match history
 - [ ] Player ELO history and progression
 - [ ] Match details with full scoreboard
+
+### Technical Improvements
+- [ ] API versioning (`/api/v1/...`)
+- [ ] Health check endpoint (`/health`)
+- [ ] Unified response format (JSend standard)
+- [ ] Structured error codes
+- [ ] Rate limiting and request throttling
+- [ ] OpenAPI/Swagger specification
+- [ ] Structured logging (Winston/Pino)
+- [ ] Security headers (CSP, HSTS, etc.)
+- [ ] HTTP caching strategy
+- [ ] Unit and integration tests
 
 Have a feature request? Feel free to open an issue!
 
