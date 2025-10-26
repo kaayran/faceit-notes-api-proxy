@@ -36,6 +36,7 @@ The application will be available at `http://localhost:3000`
 
 Open in your browser:
 - `http://localhost:3000` - Home page with documentation
+- `http://localhost:3000/api/health` - Health check endpoint
 - `http://localhost:3000/api/player?playerId=test` - Test request
 
 ## Deploy to Vercel
@@ -93,6 +94,9 @@ faceit-notes-api-proxy/
 ### Using curl
 
 ```bash
+# Check API health
+curl "http://localhost:3000/api/health"
+
 # Get player information
 curl "http://localhost:3000/api/player?playerId=abc123"
 
@@ -106,6 +110,7 @@ curl "http://localhost:3000/api/search?nickname=s1mple&game=cs2"
 ### Using Browser
 
 Simply open the URL in your browser:
+- `http://localhost:3000/api/health` - Health check
 - `http://localhost:3000/api/player?playerId=abc123`
 - `http://localhost:3000/api/search?nickname=player`
 

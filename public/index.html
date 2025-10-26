@@ -19,11 +19,38 @@
                 <span class="toc-toggle">▼</span>
             </div>
             <div class="toc-content" id="tocContent">
+                <a href="#endpoint-health" class="toc-item">Health Check</a>
                 <a href="#endpoint-match" class="toc-item">Match Data with Players</a>
                 <a href="#endpoint-match-stats" class="toc-item">Historical Nicknames from Match</a>
                 <a href="#endpoint-player" class="toc-item">Player Information</a>
                 <a href="#endpoint-search" class="toc-item">Search Players</a>
             </div>
+        </div>
+
+        <div class="endpoint-card" id="endpoint-health">
+            <div class="endpoint-header">
+                <span class="method-badge">GET</span>
+                <code class="endpoint-url">/api/health</code>
+            </div>
+            <p class="endpoint-description">
+                Health check endpoint to verify API status and availability. Useful for monitoring and uptime checks.
+            </p>
+            
+            <h3 class="section-title">Request Parameters</h3>
+            <p class="endpoint-description">No parameters required.</p>
+
+            <h3 class="section-title">Example Response</h3>
+            <pre class="code-block">{
+  <span class="json-key">"status"</span>: <span class="json-string">"healthy"</span>,
+  <span class="json-key">"timestamp"</span>: <span class="json-string">"2025-10-26T12:34:56.789Z"</span>,
+  <span class="json-key">"uptime"</span>: <span class="json-number">3600</span>,
+  <span class="json-key">"environment"</span>: <span class="json-string">"production"</span>,
+  <span class="json-key">"version"</span>: <span class="json-string">"1.0.0"</span>,
+  <span class="json-key">"checks"</span>: {
+    <span class="json-key">"api_key"</span>: <span class="json-string">"configured"</span>
+  }
+}</pre>
+            <button class="copy-btn" onclick="copyToClipboard('/api/health', event)">Copy Example URL</button>
         </div>
 
         <div class="endpoint-card" id="endpoint-match">

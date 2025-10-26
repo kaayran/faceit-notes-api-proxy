@@ -28,6 +28,30 @@ Full interactive documentation is available on the home page after deployment.
 
 ## API Endpoints
 
+### Health Check
+
+```http
+GET /api/health
+```
+
+Returns the health status of the API.
+
+**Example Response:**
+```json
+{
+  "status": "healthy",
+  "timestamp": "2025-10-26T12:34:56.789Z",
+  "uptime": 3600,
+  "environment": "production",
+  "version": "1.0.0",
+  "checks": {
+    "api_key": "configured"
+  }
+}
+```
+
+---
+
 ### 1. Match Data with Players
 
 ```http
@@ -192,7 +216,7 @@ faceit-notes-api-proxy/
 
 ### Technical Improvements
 - [ ] API versioning (`/api/v1/...`)
-- [ ] Health check endpoint (`/health`)
+- [x] Health check endpoint (`/health`)
 - [ ] Unified response format (JSend standard)
 - [ ] Structured error codes
 - [ ] Rate limiting and request throttling
