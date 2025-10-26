@@ -1,18 +1,45 @@
 # FACEIT Notes API Proxy
 
-API proxy for FACEIT data to hide API keys on client side.
+> Secure API proxy for FACEIT data. Hides API keys from client-side applications.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+
+## Overview
+
+This serverless API proxy provides secure access to FACEIT data without exposing API keys on the client side. Built with Vercel serverless functions, it offers four main endpoints for retrieving player and match information.
+
+**Features:**
+- Secure API key storage on the server
+- CORS enabled for client-side applications
+- Parameter validation and error handling
+- Fast serverless functions
+- Interactive documentation page
+
+## Getting Started
+
+For detailed setup instructions, see [docs/SETUP.md](docs/SETUP.md)
+
+**Quick Deploy:**
+1. Clone this repository
+2. Add `SERVER_API_KEY` environment variable
+3. Deploy to Vercel
+
+Full interactive documentation is available on the home page after deployment.
 
 ## API Endpoints
 
-### 1. Get Match Data with Players
+### 1. Match Data with Players
 
-```
+```http
 GET /api/match?matchId={matchId}
 ```
 
-Returns match data with all players info (current nicknames, avatars, countries).
+Returns match data with all players (current nicknames, avatars, countries).
 
-**Response:**
+**Parameters:**
+- `matchId` *(required)* - FACEIT match ID
+
+**Example Response:**
 ```json
 {
   "matchId": "1-xxx",
@@ -20,9 +47,9 @@ Returns match data with all players info (current nicknames, avatars, countries)
     {
       "playerId": "abc123",
       "nickname": "Player1",
-      "avatar": "...",
-      "country": "...",
-      "games": {...}
+      "avatar": "https://...",
+      "country": "ua",
+      "games": { "cs2": {...} }
     }
   ]
 }
@@ -30,47 +57,58 @@ Returns match data with all players info (current nicknames, avatars, countries)
 
 ---
 
-### 2. Get Single Player Info
+### 2. Player Information
 
-```
+```http
 GET /api/player?playerId={playerId}
 ```
 
-Returns player information.
+Returns information about a single player.
 
-**Response:**
+**Parameters:**
+- `playerId` *(required)* - FACEIT player ID
+
+**Example Response:**
 ```json
 {
   "playerId": "abc123",
   "nickname": "Player1",
-  "avatar": "...",
-  "country": "...",
-  "games": {...}
+  "avatar": "https://...",
+  "country": "ua",
+  "games": {
+    "cs2": {
+      "skill_level": 10,
+      "faceit_elo": 2000
+    }
+  }
 }
 ```
 
 ---
 
-### 3. Get Players from Match (Historical Nicknames)
+### 3. Historical Nicknames from Match
 
-```
+```http
 GET /api/match-stats?matchId={matchId}
 ```
 
-Returns players with their nicknames as they were during the match. Useful for getting historical nicknames.
+Returns players with their nicknames at the time of the match. Useful for getting historical nicknames.
 
-**Response:**
+**Parameters:**
+- `matchId` *(required)* - FACEIT match ID
+
+**Example Response:**
 ```json
 {
   "matchId": "1-xxx",
   "players": [
     {
       "playerId": "abc123",
-      "nickname": "Player1"
+      "nickname": "OldNickname1"
     },
     {
       "playerId": "def456",
-      "nickname": "Player2"
+      "nickname": "OldNickname2"
     }
   ]
 }
@@ -78,34 +116,92 @@ Returns players with their nicknames as they were during the match. Useful for g
 
 ---
 
-### 4. Search for Players
+### 4. Search Players
 
-```
+```http
 GET /api/search?nickname={nickname}&game={game}&country={country}&offset={offset}&limit={limit}
 ```
 
-Search for players by nickname. 
+Search for players by nickname with additional filters.
 
 **Parameters:**
-- `nickname` (required)
-- `game` (optional) - e.g. "cs2", "dota2"
-- `country` (optional) - e.g. "us", "ua"
-- `offset` (optional) - default: 0
-- `limit` (optional) - default: 20, max: 100
+- `nickname` *(required)* - Nickname to search for
+- `game` *(optional)* - Filter by game (e.g., "cs2", "dota2", "lol")
+- `country` *(optional)* - Filter by country (e.g., "ua", "ru", "us")
+- `offset` *(optional)* - Pagination offset (default: 0)
+- `limit` *(optional)* - Number of results (default: 20, max: 100)
 
-**Response:**
+**Example Response:**
 ```json
 {
   "start": 0,
   "end": 20,
   "items": [
     {
-      "player_id": "...",
-      "nickname": "...",
-      "avatar": "...",
-      "country": "...",
-      "games": {...}
+      "player_id": "abc123",
+      "nickname": "SearchedPlayer",
+      "avatar": "https://...",
+      "country": "ua",
+      "games": { "cs2": {...} }
     }
   ]
 }
 ```
+
+## Project Structure
+
+```
+faceit-notes-api-proxy/
+├── api/                     # Serverless API functions
+│   ├── match.js             # Get match data
+│   ├── match-stats.js       # Get historical data
+│   ├── player.js            # Get player data
+│   └── search.js            # Search players
+├── docs/                    # Documentation
+│   └── SETUP.md             # Setup guide
+├── lib/                     # Helper modules
+│   ├── faceit-client.js     # FACEIT API client
+│   ├── response-handler.js  # Response handling
+│   └── validation.js        # Parameter validation
+├── public/                  # Static files
+│   ├── index.html           # Main documentation page
+│   ├── styles.css           # Stylesheet
+│   └── script.js            # Client-side JavaScript
+├── .gitignore               # Git ignore rules
+├── LICENSE                  # MIT License
+├── package.json             # NPM configuration
+├── README.md                # Project documentation
+└── vercel.json              # Vercel configuration
+```
+
+## Security
+
+- API keys stored securely in environment variables
+- CORS enabled for client-side applications
+- Input validation and sanitization
+- Comprehensive error handling
+
+## Roadmap
+
+We're actively working on expanding the FACEIT API proxy functionality. Planned features:
+
+- [ ] Detailed player statistics and performance metrics
+- [ ] Extended match data (rounds, kills, deaths, assists)
+- [ ] Player match history
+- [ ] Player ELO history and progression
+- [ ] Match details with full scoreboard
+
+Have a feature request? Feel free to open an issue!
+
+## Links
+
+- [Setup Guide](docs/SETUP.md) - Detailed installation and configuration instructions
+- [FACEIT API Docs](https://developers.faceit.com/docs) - Official FACEIT API documentation
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues and pull requests.
+
+## License
+
+MIT

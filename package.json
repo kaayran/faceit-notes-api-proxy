@@ -1,12 +1,29 @@
 {
   "name": "faceit-notes-api-proxy",
   "version": "1.0.0",
-  "description": "",
+  "description": "Secure API proxy for FACEIT data. Hides API keys from client-side applications.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "deploy": "vercel --prod",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "faceit",
+    "api",
+    "proxy",
+    "cs2",
+    "gaming",
+    "vercel",
+    "serverless"
+  ],
   "author": "",
-  "license": "ISC"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaayran/faceit-notes-api-proxy.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FACEIT Notes API Proxy - Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>FACEIT Notes API Proxy</h1>
+            <p>Secure API proxy for FACEIT data with API key protection</p>
+        </div>
+
+        <div class="toc-container">
+            <div class="toc-header" onclick="toggleTOC()">
+                <span>Table of Contents</span>
+                <span class="toc-toggle">▼</span>
+            </div>
+            <div class="toc-content" id="tocContent">
+                <a href="#endpoint-match" class="toc-item">Match Data with Players</a>
+                <a href="#endpoint-match-stats" class="toc-item">Historical Nicknames from Match</a>
+                <a href="#endpoint-player" class="toc-item">Player Information</a>
+                <a href="#endpoint-search" class="toc-item">Search Players</a>
+            </div>
+        </div>
+
+        <div class="endpoint-card" id="endpoint-match">
+            <div class="endpoint-header">
+                <span class="method-badge">GET</span>
+                <code class="endpoint-url">/api/match</code>
+            </div>
+            <p class="endpoint-description">
+                Get match data with all players. Returns current nicknames, avatars, and countries of all players.
+            </p>
+            
+            <h3 class="section-title">Request Parameters</h3>
+            <ul class="params-list">
+                <li>
+                    <span class="param-name param-required">matchId</span>
+                    <span class="param-desc">FACEIT match ID (required)</span>
+                </li>
+            </ul>
+
+            <h3 class="section-title">Example Response</h3>
+            <pre class="code-block">{
+  <span class="json-key">"matchId"</span>: <span class="json-string">"1-xxx"</span>,
+  <span class="json-key">"players"</span>: [
+    {
+      <span class="json-key">"playerId"</span>: <span class="json-string">"abc123"</span>,
+      <span class="json-key">"nickname"</span>: <span class="json-string">"Player1"</span>,
+      <span class="json-key">"avatar"</span>: <span class="json-string">"https://..."</span>,
+      <span class="json-key">"country"</span>: <span class="json-string">"ua"</span>,
+      <span class="json-key">"games"</span>: { <span class="json-key">"cs2"</span>: {...} }
+    }
+  ]
+}</pre>
+            <button class="copy-btn" onclick="copyToClipboard('/api/match?matchId=YOUR_MATCH_ID', event)">Copy Example URL</button>
+        </div>
+
+        <div class="endpoint-card" id="endpoint-match-stats">
+            <div class="endpoint-header">
+                <span class="method-badge">GET</span>
+                <code class="endpoint-url">/api/match-stats</code>
+            </div>
+            <p class="endpoint-description">
+                Get players from a match with their historical nicknames (as they were during the match). Useful for retrieving old nicknames.
+            </p>
+            
+            <h3 class="section-title">Request Parameters</h3>
+            <ul class="params-list">
+                <li>
+                    <span class="param-name param-required">matchId</span>
+                    <span class="param-desc">FACEIT match ID (required)</span>
+                </li>
+            </ul>
+
+            <h3 class="section-title">Example Response</h3>
+            <pre class="code-block">{
+  <span class="json-key">"matchId"</span>: <span class="json-string">"1-xxx"</span>,
+  <span class="json-key">"players"</span>: [
+    {
+      <span class="json-key">"playerId"</span>: <span class="json-string">"abc123"</span>,
+      <span class="json-key">"nickname"</span>: <span class="json-string">"OldNickname"</span>
+    },
+    {
+      <span class="json-key">"playerId"</span>: <span class="json-string">"def456"</span>,
+      <span class="json-key">"nickname"</span>: <span class="json-string">"AnotherOldNick"</span>
+    }
+  ]
+}</pre>
+            <button class="copy-btn" onclick="copyToClipboard('/api/match-stats?matchId=YOUR_MATCH_ID', event)">Copy Example URL</button>
+        </div>
+
+        <div class="endpoint-card" id="endpoint-player">
+            <div class="endpoint-header">
+                <span class="method-badge">GET</span>
+                <code class="endpoint-url">/api/player</code>
+            </div>
+            <p class="endpoint-description">
+                Get information about a single player by their ID.
+            </p>
+            
+            <h3 class="section-title">Request Parameters</h3>
+            <ul class="params-list">
+                <li>
+                    <span class="param-name param-required">playerId</span>
+                    <span class="param-desc">FACEIT player ID (required)</span>
+                </li>
+            </ul>
+
+            <h3 class="section-title">Example Response</h3>
+            <pre class="code-block">{
+  <span class="json-key">"playerId"</span>: <span class="json-string">"abc123"</span>,
+  <span class="json-key">"nickname"</span>: <span class="json-string">"Player1"</span>,
+  <span class="json-key">"avatar"</span>: <span class="json-string">"https://..."</span>,
+  <span class="json-key">"country"</span>: <span class="json-string">"ua"</span>,
+  <span class="json-key">"games"</span>: {
+    <span class="json-key">"cs2"</span>: {
+      <span class="json-key">"skill_level"</span>: <span class="json-number">10</span>,
+      <span class="json-key">"faceit_elo"</span>: <span class="json-number">2000</span>
+    }
+  }
+}</pre>
+            <button class="copy-btn" onclick="copyToClipboard('/api/player?playerId=YOUR_PLAYER_ID', event)">Copy Example URL</button>
+        </div>
+
+        <div class="endpoint-card" id="endpoint-search">
+            <div class="endpoint-header">
+                <span class="method-badge">GET</span>
+                <code class="endpoint-url">/api/search</code>
+            </div>
+            <p class="endpoint-description">
+                Search for players by nickname with additional filters for game and country.
+            </p>
+            
+            <h3 class="section-title">Request Parameters</h3>
+            <ul class="params-list">
+                <li>
+                    <span class="param-name param-required">nickname</span>
+                    <span class="param-desc">Nickname to search for (required)</span>
+                </li>
+                <li>
+                    <span class="param-name param-optional">game</span>
+                    <span class="param-desc">Filter by game (e.g., "cs2", "dota2", "lol")</span>
+                </li>
+                <li>
+                    <span class="param-name param-optional">country</span>
+                    <span class="param-desc">Filter by country (e.g., "ua", "ru", "us")</span>
+                </li>
+                <li>
+                    <span class="param-name param-optional">offset</span>
+                    <span class="param-desc">Pagination offset (default: 0)</span>
+                </li>
+                <li>
+                    <span class="param-name param-optional">limit</span>
+                    <span class="param-desc">Number of results (default: 20, max: 100)</span>
+                </li>
+            </ul>
+
+            <h3 class="section-title">Example Response</h3>
+            <pre class="code-block">{
+  <span class="json-key">"start"</span>: <span class="json-number">0</span>,
+  <span class="json-key">"end"</span>: <span class="json-number">20</span>,
+  <span class="json-key">"items"</span>: [
+    {
+      <span class="json-key">"player_id"</span>: <span class="json-string">"abc123"</span>,
+      <span class="json-key">"nickname"</span>: <span class="json-string">"SearchedPlayer"</span>,
+      <span class="json-key">"avatar"</span>: <span class="json-string">"https://..."</span>,
+      <span class="json-key">"country"</span>: <span class="json-string">"ua"</span>,
+      <span class="json-key">"games"</span>: { <span class="json-key">"cs2"</span>: {...} }
+    }
+  ]
+}</pre>
+            <button class="copy-btn" onclick="copyToClipboard('/api/search?nickname=PlayerName&game=cs2&limit=10', event)">Copy Example URL</button>
+        </div>
+
+        <div class="footer">
+            <p>API keys are securely protected on the server side</p>
+            <p style="margin-top: 10px; opacity: 0.8;">Made for FACEIT Notes</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
